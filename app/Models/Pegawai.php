@@ -9,21 +9,23 @@ class Pegawai extends Model
 {
     use HasFactory;
 
+    protected $table = 'pegawai';
+    protected $primaryKey = 'id_pegawai';
 
     protected $fillable = [
-        'id_user',
-        'nama',
-        'kelamin',
-        'tgl_lahir',
-        'no_telp',
-        'no_telp_darurat',
-        'tgl_registrasi',
+        'nama_lengkap',
+        'nik',
+        'jk',
         'alamat',
+        'no_telp',
+        'tgl_lahir',
+        'tempat_lahir',
+        'agama',
+        'gol_darah',
+        'pendidikan',
+        'kontak_darurat',
+        'mulai_kerja',
+        'jabatan',
+        'rekening'
     ];
-
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user', 'id_user');
-    }
 }
