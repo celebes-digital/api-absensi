@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Pegawai\StoreRequest;
+use App\Http\Requests\Pegawai\UpdateRequest;
 use App\Models\Pegawai;
-use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
 {
@@ -12,57 +13,34 @@ class PegawaiController extends Controller
         return Pegawai::all();
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $data = $request->validate([
-            'nik'            => 'required|numeric:16|unique:pegawai,nik',
-            'nama_lengkap'   => 'required',
-            'jk'             => 'required|in:l,p',
-            'tgl_lahir'      => 'required',
-            'tempat_lahir'   => 'required',
-            'agama'          => 'required|in:islam,katolik,hindu,buddha,konghucu',
-            'gol_darah'      => 'required|in:A,B,AB,O,A+,B+,AB+,O+,A-,B-,AB-,O-',
-            'pendidikan'     => 'required',
-            'kontak_darurat' => 'required',
-            'mulai_kerja'    => 'required|date',
-            'jabatan'        => 'required',
-            'rekening'       => 'required',
-            'alamat'         => 'required',
-            'no_telp'        => 'required',
-        ]);
+        $data = $request->validated();
 
         return Pegawai::create($data);
     }
 
-    public function show(Pegawai $pegawai) {
+    public function show(Pegawai $pegawai) 
+    {
         return $pegawai;
     }
 
-    public function update(Request $request, Pegawai $pegawai) {
-        $data = $request->validate([
-            'nik'            => 'required|numeric:16|unique:pegawai,nik',
-            'nama_lengkap'   => 'required',
-            'jk'             => 'required|in:l,p',
-            'tgl_lahir'      => 'required',
-            'tempat_lahir'   => 'required',
-            'agama'          => 'required|in:islam,katolik,hindu,buddha,konghucu',
-            'gol_darah'      => 'required|in:A,B,AB,O,A+,B+,AB+,O+,A-,B-,AB-,O-',
-            'pendidikan'     => 'required',
-            'kontak_darurat' => 'required',
-            'mulai_kerja'    => 'required|date',
-            'jabatan'        => 'required',
-            'rekening'       => 'required',
-            'alamat'         => 'required',
-            'no_telp'        => 'required',
-        ]);
+    public function update(UpdateRequest $request, Pegawai $pegawai) 
+    {
+        $data = $request->validated();
 
         $pegawai->update($data);
 
-        return "Update success";
+        return response()->json([
+            'message' => 'Data pegawai berhasil diperbarui'
+        ]);
     }
 
-    public function destroy(Pegawai $pegawai) {
+    public function destroy(Pegawai $pegawai) 
+    {
         $pegawai->delete();
-        return ["message" => "Delete success"];
+        return response()->json([
+            'message' => 'Data pegawai berhasil dihapus'
+        ]);
     }
 }
