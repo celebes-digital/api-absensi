@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Pegawai\StoreRequest;
 use App\Http\Requests\Pegawai\UpdateRequest;
 use App\Models\Pegawai;
+use App\Models\User;
 
 class PegawaiController extends Controller
 {
@@ -16,8 +17,15 @@ class PegawaiController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+        $user = User::create([
+            'email'         => $data['email'],
+            'password'      => bcrypt('absensi_key_temp'),
+        ]);
 
-        return Pegawai::create($data);
+        $data['id_user'] = $user->id_user;
+        Pegawai::create($data);
+
+        return $data;
     }
 
     public function show(Pegawai $pegawai) 

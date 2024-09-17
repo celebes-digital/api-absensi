@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nik'            => 'required|numeric:16|unique:pegawai,nik',
+            'nik'            => 'required|numeric:16|exists:pegawai,nik',
             'nama_lengkap'   => 'required',
             'jk'             => 'required|in:l,p',
             'tgl_lahir'      => 'required',

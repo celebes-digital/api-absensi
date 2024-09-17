@@ -13,6 +13,7 @@ class Pegawai extends Model
     protected $primaryKey = 'id_pegawai';
 
     protected $fillable = [
+        'id_user',
         'nama_lengkap',
         'nik',
         'jk',
@@ -28,4 +29,9 @@ class Pegawai extends Model
         'jabatan',
         'rekening'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
 }
