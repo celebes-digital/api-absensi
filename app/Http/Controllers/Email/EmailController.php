@@ -28,15 +28,20 @@ class EmailController extends Controller
                 ], 400);
             }
 
-            $token          = Str::random(64);
-            $data['token']  = $token;
             
+            $dataPasswordResetToken = DB::select('SELECT email, token FROM password_reset_tokens WHERE email = ?', [$request->email]);
+            
+            $token = $dataPasswordResetToken[0]->token;
+            
+            if(!$dataPasswordResetToken) {
+                $token          = Str::random(64);
+                DB::insert(
+                    'INSERT INTO password_reset_tokens (email, token) VALUES (?, ?)',
+                    [$request->email, $token]
+                );
+            }
+            $data['token']  = $token;
             Mail::to($request->email)->send(new SendEmailVerification($data));
-
-            DB::insert(
-                'INSERT INTO password_reset_tokens (email, token) VALUES (?, ?)',
-                [$request->email, $token]
-            );
 
             return response()->json([
                 'message' => 'Success to send email verifikasi',
