@@ -31,7 +31,6 @@ class EmailController extends Controller
             
             $dataPasswordResetToken = DB::select('SELECT email, token FROM password_reset_tokens WHERE email = ?', [$request->email]);
             
-            $token = $dataPasswordResetToken[0]->token;
             
             if(!$dataPasswordResetToken) {
                 $token          = Str::random(64);
@@ -39,6 +38,8 @@ class EmailController extends Controller
                     'INSERT INTO password_reset_tokens (email, token) VALUES (?, ?)',
                     [$request->email, $token]
                 );
+            } else {
+                $token = $dataPasswordResetToken[0]->token;
             }
             $data['token']  = $token;
             Mail::to($request->email)->send(new SendEmailVerification($data));
