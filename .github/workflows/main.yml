@@ -48,5 +48,6 @@ jobs:
     
     - name: Deploy with rsync
       run: |
+        eval "$(ssh-agent -s)"
         echo "${{ secrets.PASS }}" | ssh-add -p ~/.ssh/id_rsa
         rsync -avz --delete ./ eventpro@${{ secrets.HOST }}:home/eventpro/api-absensi/public
