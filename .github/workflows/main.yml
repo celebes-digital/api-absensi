@@ -25,4 +25,4 @@ jobs:
           passphrase: ${{ secrets.PASS }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/html && ./.scripts/deploy.sh"
+          script: "cd /home/eventpro/api-absensi && ./public/deploy.sh"
