@@ -4,5 +4,5 @@ namespace App\Http\Controllers;
 
 abstract class Controller
 {
-    // deploy actions
+    // deploy actions yook
 }
