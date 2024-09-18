@@ -34,4 +34,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
+
+    public function kehadiran()
+    {
+        return $this->hasMany(Kehadiran::class, 'id_pegawai', 'id_pegawai');
+    }
 }
