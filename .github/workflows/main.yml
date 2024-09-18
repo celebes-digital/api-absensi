@@ -43,7 +43,7 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.SSHKEY }}
-        # known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        known_hosts: ${{ secrets.PUBLIC_SSH }}
         passphrase: ${{ secrets.PASS }}
     
     - name: Deploy with rsync
