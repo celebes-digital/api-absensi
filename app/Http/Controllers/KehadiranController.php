@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 
 class KehadiranController extends Controller
 {
-    public function generateKeyAbsensi() {
+    public function generateKeyAbsensi() 
+    {
         $user       = Auth::user();
 
         $idPegawai  = $user->pegawai->id_pegawai;
@@ -24,7 +25,8 @@ class KehadiranController extends Controller
         ];
     }
     
-    public function confirmAbsensi(Request $request) {
+    public function confirmAbsensi(Request $request) 
+    {
         $request->validate([
             'token' => 'required'
         ]);
