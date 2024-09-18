@@ -27,36 +27,26 @@
 #           key: ${{ secrets.SSHKEY }}
 #           script: "cd /home/eventpro/api-absensi && ./public/deploy.sh"
 #           timeout: 10000s
-
-name: Auto Deploy
+name: Deploy to Hosting
 
 on:
   push:
-    branches:
-      - main # Auto-deploy setiap kali push ke branch 'main'
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Setup SSH Agent
-      uses: webfactory/ssh-agent@v0.5.3
+    - uses: actions/checkout@v2
+    
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
       with:
-        ssh-private-key: ${{ secrets.PUBLIC_SSH }}
+        key: ${{ secrets.SSHKEY }}
+        # known_hosts: ${{ secrets.KNOWN_HOSTS }}
         passphrase: ${{ secrets.PASS }}
-
-    - name: Deploy to Server
+    
+    - name: Deploy with rsync
       run: |
-        ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
-          cd /path/to/your/application
-          git pull origin main
-          # Lakukan build atau perintah lain jika dibutuhkan, seperti:
-          # npm install
-          # npm run build
-          # Restart server jika perlu:
-          # pm2 restart app
-        EOF
+        echo "${{ secrets.PASS }}" | ssh-add -p ~/.ssh/id_rsa
+        rsync -avz --delete ./ eventpro@${{ secrets.HOST }}:home/eventpro/api-absensi/public
