@@ -1,29 +1,61 @@
-name: Deploy
+# name: Deploy
 
-# Trigger the workflow on push and 
-# pull request events on the production branch
+# # Trigger the workflow on push and 
+# # pull request events on the production branch
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+      
+# # Authenticate to the the server via ssh 
+# # and run our deployment script 
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Deploy to server
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.USERNAME }}
+#           passphrase: ${{ secrets.PASS }}
+#           port: ${{ secrets.PORT }}
+#           key: ${{ secrets.SSHKEY }}
+#           script: "cd /home/eventpro/api-absensi && ./public/deploy.sh"
+#           timeout: 10000s
+
+name: Auto Deploy
+
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
-      
-# Authenticate to the the server via ssh 
-# and run our deployment script 
+      - main # Auto-deploy setiap kali push ke branch 'main'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          passphrase: ${{ secrets.PASS }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: "cd /home/eventpro/api-absensi && ./public/deploy.sh"
-          timeout: 10000s
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH Agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Server
+      run: |
+        ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
+          cd /path/to/your/application
+          git pull origin main
+          # Lakukan build atau perintah lain jika dibutuhkan, seperti:
+          # npm install
+          # npm run build
+          # Restart server jika perlu:
+          # pm2 restart app
+        EOF
