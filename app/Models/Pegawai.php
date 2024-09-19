@@ -39,4 +39,9 @@ class Pegawai extends Model
     {
         return $this->hasMany(Kehadiran::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function shift_kerja()
+    {
+        return $this->hasMany(ShiftKerja::class, 'id_pegawai', 'id_pegawai');
+    }
 }

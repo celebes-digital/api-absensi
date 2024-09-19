@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('hari', 10);
             $table->time('jam_masuk');
             $table->time('jam_keluar');
+            $table->timestamps();
         });
     }
 
