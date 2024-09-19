@@ -18,14 +18,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'email'         => 'user@gmail.com',
-            'is_admin'      => true,
-            'password'      => bcrypt('12345678'),
-            'last_active'   => now()
+            'email'             => 'user@gmail.com',
+            'is_admin'          => false,
+            'password'          => bcrypt('12345678'),
+            'is_email_verified' => true,
+            'last_active'       => now()
         ]);
 
         Pegawai::create([
-            'id_user'       => 1,
+            'id_user'       => 2,
             'nik'           => 123456,
             'nama_lengkap'  => 'user',
             'tgl_lahir'     => '1999-01-01',
