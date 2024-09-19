@@ -8,13 +8,18 @@ use App\Http\Controllers\ShiftKerjaController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login',            [AuthController::class, 'login']);
-Route::post('logout',           [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 
-Route::post('send-verification', [EmailController::class, 'sendEmailVerification']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('pegawai',       PegawaiController::class);
+    Route::apiResource('shift',         ShiftKerjaController::class);
+    
+    Route::get('kehadiran/get-kode',    [KehadiranController::class, 'generateKeyAbsensi']);
+    
+    Route::middleware('admin')->group(function () {
+        Route::post('kehadiran/confirm',        [KehadiranController::class, 'confirmAbsensi']);
+        Route::post('email/send-verification',  [EmailController::class, 'sendEmailVerification']);
+    });
 
-Route::apiResource('pegawai',   PegawaiController::class);
-Route::apiResource('shift',     ShiftKerjaController::class);
-
-Route::get('kehadiran/get-kode-absensi', [KehadiranController::class, 'generateKeyAbsensi'])->middleware('auth:sanctum');
-Route::post('kehadiran/confirm-absensi', [KehadiranController::class, 'confirmAbsensi'])->middleware('auth:sanctum');
+    Route::post('logout',   [AuthController::class, 'logout']);
+});

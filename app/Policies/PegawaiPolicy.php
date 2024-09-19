@@ -2,65 +2,56 @@
 
 namespace App\Policies;
 
+use Constant;
+
 use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class PegawaiPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(User $user): bool
     {
-        //
+        return false;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Pegawai $pegawai): bool
+    public function view(User $user, Pegawai $pegawai)
     {
-        //
+        return false;
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        //
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Pegawai $pegawai): bool
+    public function update(User $user, Pegawai $pegawai): Response
     {
-        //
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Pegawai $pegawai): bool
+    public function delete(User $user, Pegawai $pegawai): Response
     {
-        //
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Pegawai $pegawai): bool
+    public function restore(User $user, Pegawai $pegawai): Response
     {
-        //
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Pegawai $pegawai): bool
+    public function forceDelete(User $user, Pegawai $pegawai): Response
     {
-        //
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 }

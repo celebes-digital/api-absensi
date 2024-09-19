@@ -6,6 +6,7 @@ use App\Http\Requests\Pegawai\StoreRequest;
 use App\Http\Requests\Pegawai\UpdateRequest;
 use App\Models\Pegawai;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class PegawaiController extends Controller
 {
@@ -16,6 +17,8 @@ class PegawaiController extends Controller
 
     public function store(StoreRequest $request)
     {
+        Gate::authorize('create', Pegawai::class);
+
         $data = $request->validated();
         $user = User::create([
             'email'         => $data['email'],
@@ -35,6 +38,8 @@ class PegawaiController extends Controller
 
     public function update(UpdateRequest $request, Pegawai $pegawai) 
     {
+        Gate::authorize('create', Pegawai::class);
+
         $data = $request->validated();
 
         $pegawai->update($data);
@@ -46,6 +51,8 @@ class PegawaiController extends Controller
 
     public function destroy(Pegawai $pegawai) 
     {
+        Gate::authorize('create', Pegawai::class);
+
         $pegawai->delete();
         return response()->json([
             'message' => 'Data pegawai berhasil dihapus'

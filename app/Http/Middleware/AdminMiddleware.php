@@ -3,10 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Constant;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class admin
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,9 +18,8 @@ class admin
     {
         if (!$request->user()->is_admin) {
             return response()->json([
-                'message' => 'error',
-                'errors' => 'Unauthorized',
-            ], 401);
+                'message' => Constant::ERROR_MESSAGE_UNAUTHORIZED,
+            ], 403);
         }
 
         return $next($request);
