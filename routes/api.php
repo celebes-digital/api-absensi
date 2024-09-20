@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Email\EmailController;
+use App\Http\Controllers\GajiController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ShiftKerjaController;
@@ -13,6 +14,7 @@ Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('pegawai',       PegawaiController::class);
     Route::apiResource('shift',         ShiftKerjaController::class);
+    Route::apiResource('gaji',          GajiController::class);
     
     Route::get('kehadiran/get-kode',    [KehadiranController::class, 'generateKeyAbsensi']);
     

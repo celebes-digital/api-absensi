@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gaji', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_gaji');
             $table->foreignId('id_pegawai')->constrained(
-                table: 'pegawai',
-                indexName: 'gaji_id_pegawai',
-                column: 'id_pegawai'
+                table       : 'pegawai',
+                indexName   : 'gaji_id_pegawai',
+                column      : 'id_pegawai'
             );
             $table->unsignedInteger('gaji_pokok');
             $table->unsignedInteger('tunjangan');
