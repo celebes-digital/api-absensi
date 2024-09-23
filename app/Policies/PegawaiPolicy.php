@@ -12,12 +12,12 @@ class PegawaiPolicy
 {
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->is_admin;
     }
 
     public function view(User $user, Pegawai $pegawai)
     {
-        return false;
+        return $user->id_user == $pegawai->id_user;
     }
 
     public function create(User $user): Response
