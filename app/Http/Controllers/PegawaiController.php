@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 
 use App\Http\Requests\Pegawai\StoreRequest;
@@ -23,11 +24,11 @@ class PegawaiController extends Controller
         $this->pegawaiService = $pegawaiService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Pegawai::class);
 
-        $data = $this->pegawaiService->getAllPegawai();
+        $data = $this->pegawaiService->getAllPegawai($request);
         return $this->success('Berhasil mengambil semua data pegawai', PegawaiResource::collection($data));
     }
 

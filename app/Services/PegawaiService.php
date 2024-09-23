@@ -7,9 +7,14 @@ use App\Models\User;
 
 class PegawaiService 
 {
-    public function getAllPegawai() 
+    public function getAllPegawai($request) 
     {
-        return Pegawai::all();
+        $query = Pegawai::query();
+        if($request->has('search')) {
+            $query->whereRaw('LOWER(nama_lengkap) LIKE ?', ['%' . strtolower($request->search) . '%']);
+        }
+
+        return $query->get();
     }
 
     public function createPegawai($data)
@@ -26,7 +31,7 @@ class PegawaiService
 
     public function getPegawaiById($id) 
     {
-        return Pegawai::findOrFail($id);
+        return Pegawai::findOrFail($id)->load('user');
     }
 
     public function updatePegawai(Pegawai $pegawai, $data) 
