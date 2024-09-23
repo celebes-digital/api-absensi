@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class Constant 
 {
     const ERROR_MESSAGE_UNAUTHORIZED        = "Anda tidak diizinkan mengakses resource ini.";

@@ -2,22 +2,25 @@
 
 namespace App\Policies;
 
-use Constant;
+use App\Constant;
 
-use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class PegawaiPolicy
 {
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return $user->is_admin;
+        return $user->is_admin ? 
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    public function view(User $user, Pegawai $pegawai)
+    public function view(User $user, int $id): Response
     {
-        return $user->id_user == $pegawai->id_user;
+        return $user->id_user == $id || $user->is_admin ?
+                    Response::allow() : 
+                    Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
     public function create(User $user): Response
@@ -27,28 +30,28 @@ class PegawaiPolicy
                     Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    public function update(User $user, Pegawai $pegawai): Response
+    public function update(User $user): Response
     {
         return $user->is_admin ? 
                     Response::allow() : 
                     Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    public function delete(User $user, Pegawai $pegawai): Response
+    public function delete(User $user): Response
     {
         return $user->is_admin ? 
                     Response::allow() : 
                     Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    public function restore(User $user, Pegawai $pegawai): Response
+    public function restore(User $user): Response
     {
         return $user->is_admin ? 
                     Response::allow() : 
                     Response::deny(Constant::ERROR_MESSAGE_UNAUTHORIZED);
     }
 
-    public function forceDelete(User $user, Pegawai $pegawai): Response
+    public function forceDelete(User $user): Response
     {
         return $user->is_admin ? 
                     Response::allow() : 

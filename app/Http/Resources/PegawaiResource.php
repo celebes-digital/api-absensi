@@ -11,7 +11,7 @@ class PegawaiResource extends JsonResource
         return [
             'id_pegawai'    => $this->id_pegawai,
             'id_user'       => $this->id_user,
-            'nama_lengkap'  => $this->user->is_admin ? 'Admin' : $this->nama_lengkap,
+            'nama_lengkap'  => $this->nama_lengkap ?? 'Admin',
             'nik'           => $this->nik,
             'jk'            => $this->jk == 'l' ? 'Laki-laki' : 'Perempuan',
             'tgl_lahir'     => $this->tgl_lahir,
