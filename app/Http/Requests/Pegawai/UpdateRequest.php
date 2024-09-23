@@ -22,20 +22,21 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nik'            => 'required|numeric:16|exists:pegawai,nik',
-            'nama_lengkap'   => 'required',
-            'jk'             => 'required|in:l,p',
-            'tgl_lahir'      => 'required',
-            'tempat_lahir'   => 'required',
-            'agama'          => 'required|in:islam,katolik,hindu,buddha,konghucu',
-            'gol_darah'      => 'required|in:A,B,AB,O,A+,B+,AB+,O+,A-,B-,AB-,O-',
-            'pendidikan'     => 'required',
-            'kontak_darurat' => 'required',
-            'mulai_kerja'    => 'required|date',
-            'jabatan'        => 'required',
-            'rekening'       => 'required',
-            'alamat'         => 'required',
-            'no_telp'        => 'required',
+            'email'          => 'sometimes|required|email',
+            'nik'            => 'sometimes|required|numeric:16',
+            'nama_lengkap'   => 'sometimes|required',
+            'jk'             => 'sometimes|required|in:l,p',
+            'tgl_lahir'      => 'sometimes|required',
+            'tempat_lahir'   => 'sometimes|required',
+            'agama'          => 'sometimes|required|in:islam,katolik,hindu,buddha,konghucu',
+            'gol_darah'      => 'sometimes|required|in:A,B,AB,O,A+,B+,AB+,O+,A-,B-,AB-,O-',
+            'pendidikan'     => 'sometimes|required',
+            'kontak_darurat' => 'sometimes|required',
+            'mulai_kerja'    => 'sometimes|required|date',
+            'jabatan'        => 'sometimes|required',
+            'rekening'       => 'sometimes|required',
+            'alamat'         => 'sometimes|required',
+            'no_telp'        => 'sometimes|required',
         ];
     }
 }

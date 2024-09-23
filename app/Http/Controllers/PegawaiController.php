@@ -48,11 +48,11 @@ class PegawaiController extends Controller
         return $this->success('Berhasil mengambil data pegawai', new PegawaiResource($data));
     }
 
-    public function update(UpdateRequest $request, Pegawai $pegawai) 
+    public function update(UpdateRequest $request, int $id) 
     {
         Gate::authorize('update', Pegawai::class);
 
-        $data = $this->pegawaiService->updatePegawai($pegawai, $request->validated());
+        $data = $this->pegawaiService->updatePegawai($request->validated(), $id);
         return $this->success('Berhasil mengubah data pegawai', new PegawaiResource($data));
     }
 
