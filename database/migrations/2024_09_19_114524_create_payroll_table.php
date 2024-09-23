@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('payroll', function (Blueprint $table) {
             $table->id('id_payroll');
-            $table->foreignId('id_pegawai')->constrained(
-                table: 'pegawai',
-                indexName: 'payroll_id_pegawai',
-                column: 'id_pegawai'
+            $table->foreignId('id_gaji')->constrained(
+                table: 'gaji',
+                indexName: 'payroll_id_gaji',
+                column: 'id_gaji'
             );
             $table->date('periode');
             $table->integer('potongan');

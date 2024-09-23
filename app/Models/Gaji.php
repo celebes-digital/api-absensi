@@ -24,4 +24,8 @@ class Gaji extends Model
     {
         return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function payroll() {
+        return $this->hasMany(Payroll::class, 'id_gaji', 'id_gaji');
+    }
 }
