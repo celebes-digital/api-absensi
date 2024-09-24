@@ -6,8 +6,6 @@ use App\Helpers\TimeHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use function App\Helpers\TimeHelper;
-
 class ShiftKerjaResource extends JsonResource
 {
     public function toArray(Request $request)

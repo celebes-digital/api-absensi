@@ -15,17 +15,17 @@ class TimeHelper
      */
     public static function calculateTimeDifference($startTime, $endTime)
     {
-        $start = Carbon::createFromFormat('H:i', $startTime);
-        $end = Carbon::createFromFormat('H:i', $endTime);
+        $start      = Carbon::createFromFormat('H:i:s', $startTime);
+        $end        = Carbon::createFromFormat('H:i:s', $endTime);
 
-        $hours = $start->diffInHours($end);
-        $minutes = $start->diffInMinutes($end) % 60;
-        $seconds = $start->diffInSeconds($end) % 60;
+        $hours      = $start->diffInHours($end);
+        $minutes    = $start->diffInMinutes($end) % 60;
+        $seconds    = $start->diffInSeconds($end) % 60;
 
         return [
-            'hours' => floor($hours),
-            'minutes' => $minutes,
-            'seconds' => $seconds,
+            'hours'     => floor($hours),
+            'minutes'   => $minutes,
+            'seconds'   => $seconds,
         ];
     }
 }

@@ -4,10 +4,7 @@ namespace App\Services;
 
 use App\Models\ShiftKerja;
 use App\Traits\ApiResponse;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-
-// use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class ShiftKerjaService
 {
@@ -26,10 +23,22 @@ class ShiftKerjaService
             $query->where('shift_kerja.hari', $request->hari);
         }
 
+        $query->orderByRaw("
+            CASE 
+                WHEN hari = 'Senin'     THEN 1
+                WHEN hari = 'Selasa'    THEN 2
+                WHEN hari = 'Rabu'      THEN 3
+                WHEN hari = 'Kamis'     THEN 4
+                WHEN hari = 'Jumat'     THEN 5
+                WHEN hari = 'Sabtu'     THEN 6
+                WHEN hari = 'Minggu'    THEN 7
+            END
+        ");
+
         return $query->get();
     }
 
-    protected function checkTime($jamMasuk, $jamKeluar): void {
+    protected function checkTimeInputIsValid($jamMasuk, $jamKeluar): void {
         if($jamMasuk > $jamKeluar) {
             throw new BadRequestHttpException('Jam keluar harus lebih besar dari jam masuk');
         }
@@ -37,7 +46,7 @@ class ShiftKerjaService
 
     public function createShiftKerja($data) 
     {
-        $this->checkTime($data['jam_masuk'], $data['jam_keluar']);
+        $this->checkTimeInputIsValid($data['jam_masuk'], $data['jam_keluar']);
 
         $shiftKerja = ShiftKerja::create($data);
         return $shiftKerja->load('pegawai');
@@ -50,7 +59,7 @@ class ShiftKerjaService
 
     public function updateShiftKerja($data, $id) 
     {
-        $this->checkTime($data['jam_masuk'], $data['jam_keluar']);
+        $this->checkTimeInputIsValid($data['jam_masuk'], $data['jam_keluar']);
         
         $shiftKerja = $this->getShiftKerjaById($id);
         $shiftKerja->update($data);
