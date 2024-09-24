@@ -2,34 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Services\AuthService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) 
+    use ApiResponse;
+
+    protected AuthService $authService;
+
+    public function __construct(AuthService $authService)
     {
-        $request->validate([
-            'email'     => 'required|email|exists:users,email',
-            'password'  => 'required|min:6',
-        ]);
+        $this->authService = $authService;
+    }
 
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response([
-                'message' => 'Kredensial tidak valid, masukkan email dan password yang benar'
-            ], 401);
-        }
-
-        $token = $user->createToken($request->email)->plainTextToken;
-
-        return [
-            'data'  => $user,
-            'token' => $token
-        ];
+    public function login(LoginRequest $request) 
+    {
+        $data = $this->authService->login($request);
+        return $this->success('Berhasil login', $data, 200);
     }
 
     public function resetPassword(Request $request)
