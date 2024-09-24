@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
-use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\User;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Illuminate\Http\Request;
+
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthService 
@@ -52,5 +54,9 @@ class AuthService
         ]);
 
         return $user;
+    }
+
+    public function logout(Request $request) {
+        $request->user()->tokens()->delete();
     }
 }

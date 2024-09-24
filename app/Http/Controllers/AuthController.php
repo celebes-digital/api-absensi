@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-use App\Models\User;
+
 use App\Services\AuthService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -36,9 +34,7 @@ class AuthController extends Controller
 
     public function logout(Request $request) 
     {
-        $request->user()->tokens()->delete();
-        return response()->json([
-            'message' => 'User berhasil logout'
-        ]);
+        $this->authService->logout($request);
+        return $this->success('User berhasil logout');
     }
 }
