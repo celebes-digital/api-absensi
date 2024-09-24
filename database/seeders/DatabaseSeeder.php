@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'gol_darah'     => 'A+',
             'pendidikan'    => 'Sarjana Informatika',
             'kontak_darurat' => '085',
-            'mulai_kerja'   => '12-09-2024',
+            'mulai_kerja'   => '2024-12-09',
             'jabatan'       => 'Junior developer',
             'alamat'        => 'Makassar',
             'no_telp'       => '085',
