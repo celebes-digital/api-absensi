@@ -3,6 +3,7 @@
 use App\Constant;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ApiMiddleware;
+use App\Http\Middleware\IsEmailVerify;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,26 +24,27 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         
         $middleware->alias([
-            'admin' => AdminMiddleware::class,
+            'admin'         => AdminMiddleware::class,
+            'isEmailVerify' => IsEmailVerify::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (BadRequestHttpException $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage() ?? Constant::ERROR_MESSAGE_BAD_REQUEST
+                'status'    => 'error',
+                'message'   => $e->getMessage() ?? Constant::ERROR_MESSAGE_BAD_REQUEST
             ], status: 400);
         });
         $exceptions->render(function (AccessDeniedHttpException $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => Constant::ERROR_MESSAGE_UNAUTHORIZED
+                'status'    => 'error',
+                'message'   => Constant::ERROR_MESSAGE_UNAUTHORIZED
             ], status: 403);
         });
         $exceptions->render(function (NotFoundHttpException $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => Constant::ERROR_MESSAGE_NOT_FOUND
+                'status'    => 'error',
+                'message'   => Constant::ERROR_MESSAGE_NOT_FOUND
             ], status: 404);
         });
     })->create();

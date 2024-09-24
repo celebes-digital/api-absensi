@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Constant;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class IsEmailVerify
 {
     /**
      * Handle an incoming request.
@@ -16,13 +15,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()->is_admin) {
+        if(!$request->user()->is_email_verified) {
             return response()->json([
-                'status'    => 'error',
-                'message'   => Constant::ERROR_MESSAGE_UNAUTHORIZED,
-            ], 403);
+                'status'  => 'error',
+                'message' => 'Email belum terverifikasi',
+            ]);
         }
-
         return $next($request);
     }
 }

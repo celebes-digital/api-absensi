@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 Route::post('login',            [AuthController::class, 'login']);
 Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
     Route::apiResource('pegawai',       PegawaiController::class);
     Route::apiResource('shift',         ShiftKerjaController::class);
     Route::apiResource('gaji',          GajiController::class);
