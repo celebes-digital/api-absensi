@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use Constant;
+use App\Constant;
 
 use App\Models\Gaji;
 use App\Models\User;
