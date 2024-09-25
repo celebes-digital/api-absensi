@@ -7,6 +7,7 @@ use App\Models\Kehadiran;
 use App\Models\Pegawai;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -22,6 +23,10 @@ class KehadiranService
         $token      = Str::random(10);
 
         Cache::put($token, $idPegawai, $seconds = 30);
+
+        // $data = [
+        //     'token'     => $token,
+        // ];
 
         return $token;
     }
@@ -63,6 +68,21 @@ class KehadiranService
             'jam_masuk'         => $jamMasuk,
         ]);
 
+        return $data;
+    }
+
+    public function getAllKehadiran(Request $request)
+    {
+        $query = Kehadiran::query();
+        if($request->has('tgl_kehadiran')) {
+            $query->where('tgl_kehadiran', $request->tgl_kehadiran);
+        }
+        if($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $data = $query->get();
+        $data->load('pegawai');
         return $data;
     }
 }

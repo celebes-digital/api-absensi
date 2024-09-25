@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kehadiran;
+use App\Http\Resources\KehadiranResource;
 use App\Services\KehadiranService;
 use App\Traits\ApiResponse;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 
 class KehadiranController extends Controller
 {
@@ -33,6 +32,12 @@ class KehadiranController extends Controller
         ]);
 
         $data = $this->kehadiranService->confirmAbsensi($request);
-        return $this->success('Berhasil konfirmasi absensi', $data);
+        return $this->success('Berhasil konfirmasi absensi', new KehadiranResource($data));
+    }
+
+    public function index(Request $request)
+    {
+        $data = $this->kehadiranService->getAllKehadiran($request);
+        return $this->success('Berhasil mengambil semua data kehadiran', KehadiranResource::collection($data));
     }
 }
