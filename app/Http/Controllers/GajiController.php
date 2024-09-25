@@ -4,39 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Gaji\StoreRequest;
 use App\Http\Requests\Gaji\UpdateRequest;
+use App\Http\Resources\GajiResource;
 use App\Models\Gaji;
+use App\Services\GajiService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class GajiController extends Controller
 {
+    use ApiResponse;
+
+    protected $gajiService;
+
+    public function __construct(GajiService $gajiService)
+    {
+        $this->gajiService = $gajiService;
+    }
+
     public function index()
     {
-        return Gaji::all();
+        $data = $this->gajiService->getAllGaji();
+        return $this->success('Berhasil mengambil semua data gaji', GajiResource::collection($data));
     }
 
     public function store(StoreRequest $request)
     {
-        return Gaji::create($request->all());
+        $data = $this->gajiService->createGaji($request->all());
+        return $this->success('Berhasil menambahkan data gaji', new GajiResource($data), 201);
     }
     
-    public function show(Gaji $gaji)
+    public function show($id)
     {
-        return $gaji;
+        $data = $this->gajiService->getGajiById($id);
+        return $this->success('Berhasil mengambil data gaji', new GajiResource($data));
     }
 
     public function update(UpdateRequest $request, String $id)
     {
-        Gaji::find($id)->update($request->all());
-        $gaji = Gaji::find($id);
-        return [
-            'gaji' => $gaji,
-            'data'  => request()->all()
-        ];
+        $data = $this->gajiService->updateGaji($request->all(), $id);
+        return $this->success('Berhasil mengubah data gaji', new GajiResource($data));
     }
     
     public function destroy(String $id)
     {
-        Gaji::findOrFail($id)->delete();
-        return ['message' => 'data deleted' ];
+        $this->gajiService->deleteGaji($id);
+        return $this->success('Berhasil menghapus data gaji');
     }
 }
