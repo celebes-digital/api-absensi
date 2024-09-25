@@ -28,7 +28,7 @@ class KehadiranService
             'token'     => $token,
         ];
 
-        return $token;
+        return $data;
     }
 
     protected function checkStatusKehadiran($pegawai, $jamMasuk) 
@@ -91,5 +91,12 @@ class KehadiranService
         $data = Kehadiran::findOrFail($id);
         $data->load('pegawai');
         return $data;
+    }
+
+    public  function updateKehadiranById($data, $id)
+    {
+        $kehadiran = $this->getKehadiranById($id);
+        $kehadiran->update($data);
+        return $kehadiran->load('pegawai');
     }
 }

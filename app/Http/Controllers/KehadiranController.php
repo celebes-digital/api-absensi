@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Kehadiran\UpdateRequest;
 use App\Http\Resources\KehadiranResource;
 use App\Services\KehadiranService;
 use App\Traits\ApiResponse;
@@ -45,5 +46,11 @@ class KehadiranController extends Controller
     {
         $data = $this->kehadiranService->getKehadiranById($id);
         return $this->success('Berhasil mengambil data kehadiran', new KehadiranResource($data));
+    }
+
+    public function update(UpdateRequest $request, $id)
+    {
+        $data = $this->kehadiranService->updateKehadiranById($request->all(), $id);
+        return $this->success('Berhasil mengubah data kehadiran', new KehadiranResource($data));
     }
 }

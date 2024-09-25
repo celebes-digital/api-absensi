@@ -18,7 +18,7 @@ return new class extends Migration
                 indexName   : 'kehadiran_id_pegawai',
                 column      : 'id_pegawai'
             );
-            $table->string('kode_kehadiran', 6);
+            $table->string('kode_kehadiran', 6)->nullable();
             $table->date('tgl_kehadiran');
             $table->time('jam_masuk')->nullable();
             $table->time('jam_keluar')->nullable();
