@@ -20,9 +20,9 @@ return new class extends Migration
             );
             $table->string('kode_kehadiran', 6);
             $table->date('tgl_kehadiran');
-            $table->timestamp('jam_masuk')->nullable();
-            $table->timestamp('jam_keluar')->nullable();
-            $table->enum('status', ['hadir', 'tidak_hadir', 'terlambat', 'izin']);
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_keluar')->nullable();
+            $table->enum('status', ['Hadir', 'Tidak hadir', 'Terlambat', 'Izin']);
         });
     }
 
