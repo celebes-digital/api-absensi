@@ -24,9 +24,9 @@ class KehadiranService
 
         Cache::put($token, $idPegawai, $seconds = 30);
 
-        // $data = [
-        //     'token'     => $token,
-        // ];
+        $data = [
+            'token'     => $token,
+        ];
 
         return $token;
     }
@@ -82,6 +82,13 @@ class KehadiranService
         }
 
         $data = $query->get();
+        $data->load('pegawai');
+        return $data;
+    }
+
+    public function getKehadiranById($id)
+    {
+        $data = Kehadiran::findOrFail($id);
         $data->load('pegawai');
         return $data;
     }

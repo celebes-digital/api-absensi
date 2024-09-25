@@ -40,4 +40,10 @@ class KehadiranController extends Controller
         $data = $this->kehadiranService->getAllKehadiran($request);
         return $this->success('Berhasil mengambil semua data kehadiran', KehadiranResource::collection($data));
     }
+
+    public function show($id)
+    {
+        $data = $this->kehadiranService->getKehadiranById($id);
+        return $this->success('Berhasil mengambil data kehadiran', new KehadiranResource($data));
+    }
 }
