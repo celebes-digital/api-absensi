@@ -93,6 +93,11 @@ class KehadiranService
         return $data;
     }
 
+    public function createKehadiran($data) {
+        $kehadiran = Kehadiran::create($data);
+        return $kehadiran->load('pegawai');
+    }
+
     public  function updateKehadiranById($data, $id)
     {
         $kehadiran = $this->getKehadiranById($id);
