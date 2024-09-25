@@ -2,9 +2,15 @@
 
 namespace App\Services;
 
+use App\Helpers\DateHelper;
+use App\Models\Kehadiran;
+use App\Models\Pegawai;
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class KehadiranService
 {
@@ -18,5 +24,45 @@ class KehadiranService
         Cache::put($token, $idPegawai, $seconds = 30);
 
         return $token;
+    }
+
+    protected function checkStatusKehadiran($pegawai, $jamMasuk) 
+    {
+        $shiftKerja = $pegawai->shift_kerja()
+                                ->where('hari', DateHelper::formatDate('l', Carbon::now()))
+                                ->first();
+
+        if(!$shiftKerja) { 
+            throw new BadRequestHttpException('hari '  . $shiftKerja->jam_masuk . ' - ' . $jamMasuk . ' Shift kerja hari ini tidak ditemukan');
+        }
+
+        if($jamMasuk > $shiftKerja->jam_masuk) {
+            return 'Terlambat';
+        }
+
+        return 'Hadir';
+    }
+
+    public function confirmAbsensi($request)
+    {
+        $token = $request->token;
+        $jamMasuk = now()->format('H:i:s');
+
+        if(!Cache::get($token)) {
+            throw new BadRequestHttpException('Token absensi tidak valid');
+        }
+        $idPegawai  = Cache::pull($token);
+        $pegawai    = Pegawai::findOrFail($idPegawai);
+        $status     = $this->checkStatusKehadiran($pegawai, $jamMasuk);
+
+        $data = Kehadiran::create([
+            'id_pegawai'        => $idPegawai,
+            'status'            => $status,
+            'kode_kehadiran'    => Str::random(6),
+            'tgl_kehadiran'     => date('Y-m-d'),
+            'jam_masuk'         => $jamMasuk,
+        ]);
+
+        return $data;
     }
 }

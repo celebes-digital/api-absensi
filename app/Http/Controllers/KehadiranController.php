@@ -20,10 +20,10 @@ class KehadiranController extends Controller
         $this->kehadiranService = $kehadiranService;
     }
 
-    public function generateKeyAbsensi() 
+    public function generateKeyAbsensi()
     {
         $token = $this->kehadiranService->generateKeyAbsensi();
-        return $this->success(['token' => $token]);
+        return $this->success('Berhasil membuat token absensi', $token);
     }
     
     public function confirmAbsensi(Request $request) 
@@ -32,26 +32,7 @@ class KehadiranController extends Controller
             'token' => 'required'
         ]);
 
-        $token = $request->token;
-
-        if(!Cache::get($token)) {
-            return response()->json([
-                'message' => 'token absensi tidak valid'
-            ], 401);
-        }
-        $idPegawai = Cache::pull($token);
-
-        $data = Kehadiran::create([
-            'id_pegawai'        => $idPegawai,
-            'status'            => 'hadir',
-            'kode_kehadiran'    => Str::random(6),
-            'tgl_kehadiran'     => date('Y-m-d'),
-            'jam_masuk'         => now(),
-        ]);
-
-        return [
-            'message'       => 'Berhasil konfirmasi absensi',
-            'data'          => $data
-        ];
+        $data = $this->kehadiranService->confirmAbsensi($request);
+        return $this->success('Berhasil konfirmasi absensi', $data);
     }
 }
