@@ -60,4 +60,10 @@ class KehadiranController extends Controller
         $data = $this->kehadiranService->updateKehadiranById($request->all(), $id);
         return $this->success('Berhasil mengubah data kehadiran', new KehadiranResource($data));
     }
+
+    public function destroy($id)
+    {
+        $this->kehadiranService->deleteKehadiranById($id);
+        return $this->success('Berhasil menghapus data kehadiran');
+    }
 }

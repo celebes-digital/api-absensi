@@ -104,4 +104,11 @@ class KehadiranService
         $kehadiran->update($data);
         return $kehadiran->load('pegawai');
     }
+
+    public function deleteKehadiranById($id)
+    {
+        $kehadiran = $this->getKehadiranById($id);
+        $kehadiran->delete();
+        return $kehadiran;
+    }
 }
