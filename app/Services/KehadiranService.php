@@ -33,7 +33,7 @@ class KehadiranService
                                 ->first();
 
         if(!$shiftKerja) { 
-            throw new BadRequestHttpException('hari '  . $shiftKerja->jam_masuk . ' - ' . $jamMasuk . ' Shift kerja hari ini tidak ditemukan');
+            throw new BadRequestHttpException('Shift kerja hari ini tidak ditemukan');
         }
 
         if($jamMasuk > $shiftKerja->jam_masuk) {
