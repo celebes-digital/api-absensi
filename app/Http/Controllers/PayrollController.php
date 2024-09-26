@@ -2,42 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payroll;
+use App\Traits\ApiResponse;
+use App\Http\Requests\Payroll\StoreRequest;
+use App\Http\Requests\Payroll\UpdateRequest;
+use App\Http\Resources\PayrollResource;
 use Illuminate\Http\Request;
+
+use App\Services\PayrollService;
 
 class PayrollController extends Controller
 {
-    public function index()
+    use ApiResponse;
+
+    protected $payrollService;
+
+    public function __construct(PayrollService $payrollService)
     {
-        return Payroll::all();
+        $this->payrollService = $payrollService;
     }
 
-    public function store(Request $request)
+    public function index(Request $request)
     {
-        $data = $request->validate([
-            'id_gaji' => 'required',
-            'potongan' => 'required',
-        ]);
+        $data = $this->payrollService->getAllPayroll($request);
+        return $this->success('Berhasil mengambil semuasdcds data payroll', PayrollResource::collection($data));
+    }
 
-        $data['periode'] = date('Y-m-d');
-
-        return [
-            'data' => Payroll::create($data)
-        ];
+    public function store(StoreRequest $request)
+    {
+        $data = $this->payrollService->createPayroll($request->all());
+        return $this->success('Berhasil menambahkan data payroll', new PayrollResource($data), 201);
     }
 
     public function show(string $id)
     {
-        return Payroll::find($id);
+        $data = $this->payrollService->getPayrollById($id);
+        return $this->success('Berhasil mengambil data payroll', new PayrollResource($data));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        return Payroll::find($id)->update($request->all());
+        $data = $this->payrollService->updatePayroll($id, $request->all());
+        return $this->success('Berhasil mengubah data payroll', new PayrollResource($data));
     }
 
     public function destroy(string $id)
     {
-        return Payroll::destroy($id);
+        $this->payrollService->deletePayroll($id);
+        return $this->success('Berhasil menghapus data payroll');
     }
 }

@@ -13,7 +13,7 @@ class Payroll extends Model
     protected $primaryKey = 'id_payroll';
 
     protected $fillable = [
-        'id_gaji',
+        'id_pegawai',
         'periode',
         'potongan',
         'total_pembayaran',
@@ -22,6 +22,6 @@ class Payroll extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo(Gaji::class, 'id_gaji', 'id_gaji');
+        return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
     }
 }
