@@ -9,14 +9,14 @@ use Illuminate\Auth\Access\Response;
 
 class KehadiranPolicy
 {
-    public function viewAny(User $user): void
+    public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
-    public function view(User $user): void
+    public function view(User $user): bool
     {
-        //
+        return true;
     }
     
     public function create(User $user): Response
