@@ -39,6 +39,11 @@ class SendEmailVerification extends Mailable
     {
         return new Content(
             view: 'emails.verification',
+            with: [
+                'url'   => $this->data['url'], 
+                'token' => $this->data['token'], 
+                'email' => $this->data['email']
+            ],
         );
     }
 

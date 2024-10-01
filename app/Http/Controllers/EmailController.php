@@ -1,17 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Email;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SendEmailVerification;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Http\Request;
 use App\Services\EmailService;
 use App\Traits\ApiResponse;
-use Exception;
 
 class EmailController extends Controller
 {
@@ -31,7 +25,7 @@ class EmailController extends Controller
             'url'       => 'required|url',
         ]);
 
-        $this->emailService->sendResetLink($request);
-        return $this->success(['message' => 'Email verifikasi terkirim']);
+        $this->emailService->sendResetLink($data);
+        return $this->success('Email verifikasi terkirim');
     }
 }

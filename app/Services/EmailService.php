@@ -17,24 +17,30 @@ class EmailService
 {
     public function sendResetLink($request)
     {
-        try {
-            $user = $this->findUserByEmail($request->email);
-            if (!$user) {
-                throw new BadRequestHttpException('Email belum terdaftar');
-            }
+        $user = $this->findUserByEmail($request['email']);
+        if (!$user) {
+            throw new BadRequestHttpException('Email belum terdaftar');
+        }
 
-            $token = $this->getOrCreateToken($request->email);
-            $this->sendResetEmail($request->email, $token, $request->url);
+        $token = $this->getOrCreateToken($request['email']);
+        $data = [
+            'email' => $request['email'],
+            'url'   => $request['url'],
+            'token' => $token
+        ];
+        
+        try {
+            $this->sendResetEmail($request['email'], $data);
 
             return true;
         } catch (Exception $e) {
-            throw new ErrorException('Gagal mengirim email verifikasi');
+            throw new ErrorException('Gagal mengirim email verifikasi, ' . $e->getMessage());
         }
     }
 
-    private function sendResetEmail($email, $token, $urlReset)
+    private function sendResetEmail($email, $data)
     {
-        Mail::to($email)->send(new SendEmailVerification(['token' => $token]));
+        Mail::to($email)->send(new SendEmailVerification($data));
     }
     
     protected function findUserByEmail($email)
