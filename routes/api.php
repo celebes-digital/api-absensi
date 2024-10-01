@@ -15,19 +15,18 @@ Route::post('login',            [AuthController::class, 'login']);
 Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
-    Route::post('logout',   [AuthController::class, 'logout']);
+    Route::post('logout',               [AuthController::class, 'logout']);
     Route::get('kehadiran/get-kode',    [KehadiranController::class, 'generateKeyAbsensi']);
 
-    
     Route::middleware('admin')->group(function () {
         Route::post('kehadiran/confirm',        [KehadiranController::class, 'confirmAbsensi']);
         Route::post('email/send-verification',  [EmailController::class, 'sendEmailVerification']);
+        
+        Route::apiResource('gaji',          GajiController::class);
+        Route::apiResource('user',          UserController::class);
+        Route::apiResource('pegawai',       PegawaiController::class);
+        Route::apiResource('payroll',       PayrollController::class);
+        Route::apiResource('kehadiran',     KehadiranController::class);
+        Route::apiResource('shift',         ShiftKerjaController::class);
     });
-    
-    Route::apiResource('pegawai',       PegawaiController::class);
-    Route::apiResource('shift',         ShiftKerjaController::class);
-    Route::apiResource('gaji',          GajiController::class);
-    Route::apiResource('payroll',       PayrollController::class);
-    Route::apiResource('user',          UserController::class);
-    Route::apiResource('kehadiran',     KehadiranController::class);
 });
