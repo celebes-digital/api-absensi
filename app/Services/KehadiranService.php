@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Helpers\DateHelper;
 use App\Models\Kehadiran;
 use App\Models\Pegawai;
-
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,12 +17,10 @@ class KehadiranService
 {
     public function generateKeyAbsensi()
     {
-        $user       = Auth::user();
+        $user   = User::with('pegawai')->findOrFail(Auth::id());
+        $token  = Str::random(10);
 
-        $idPegawai  = $user->pegawai->id_pegawai;
-        $token      = Str::random(10);
-
-        Cache::put($token, $idPegawai, $seconds = 30);
+        Cache::put($token, $user->pegawai->id_pegawai, $seconds = 30);
 
         $data = [
             'token'     => $token,
