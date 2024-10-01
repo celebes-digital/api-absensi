@@ -10,11 +10,10 @@ return new class extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->id('id_pegawai');
-            $table->foreignId('id_user')->constrained(
-                table: 'users', 
-                column: 'id_user', 
-                indexName: 'pegawai_id_user'
-            )->onDelete('cascade');
+            $table->foreignId('id_user')
+                    ->constrained('users', 'id_user')
+                    ->onDelete('cascade')
+                    ->indexName('pegawai_id_user');
 
             $table->string('nama_lengkap', 100);
             $table->string('nik', 16);

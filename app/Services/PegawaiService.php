@@ -7,6 +7,13 @@ use App\Models\User;
 
 class PegawaiService 
 {
+    protected EmailService $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function getAllPegawai($request) 
     {
         $query = Pegawai::query()->with('user');
@@ -26,6 +33,8 @@ class PegawaiService
         $data['id_user'] = $user->id_user;
         $pegawai = Pegawai::create($data)->get()->load('user');
 
+        $this->emailService->sendResetLink($data['email']);
+
         return $pegawai;
     }
 
@@ -44,8 +53,6 @@ class PegawaiService
 
     public function deletePegawai(int $id) 
     {
-        $pegawai = $this->getPegawaiById($id);
-        
-        $pegawai->delete();
+        Pegawai::destroy($id);
     }
 }
