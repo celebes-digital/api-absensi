@@ -14,7 +14,7 @@ class PegawaiResource extends JsonResource
             'email'         => $this->user ? $this->user->email : null,
             'nama_lengkap'  => $this->nama_lengkap ?? 'Admin',
             'nik'           => $this->nik,
-            'jk'            => $this->jk == 'l' ? 'Laki-laki' : 'Perempuan',
+            'jk'            => $this->jk,
             'tgl_lahir'     => $this->tgl_lahir,
             'tempat_lahir'  => $this->tempat_lahir,
             'agama'         => $this->agama,
