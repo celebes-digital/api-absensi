@@ -16,6 +16,9 @@ Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
     Route::post('logout',               [AuthController::class, 'logout']);
+    Route::get('user/payroll',          [PayrollController::class, 'getPayroll']);
+    Route::get('user/shift',            [ShiftKerjaController::class, 'getShift']);
+    Route::get('user/kehadiran',        [KehadiranController::class, 'getKehadiran']);
     Route::get('kehadiran/get-kode',    [KehadiranController::class, 'generateKeyAbsensi']);
 
     Route::middleware('admin')->group(function () {

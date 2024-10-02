@@ -38,6 +38,12 @@ class KehadiranController extends Controller
         return $this->success('Berhasil konfirmasi absensi', new KehadiranResource($data));
     }
 
+    public function getKehadiran(Request $request)
+    {
+        $data = $this->kehadiranService->getUserKehadiran($request);
+        return $this->success('Berhasil mengambil semua data kehadiran', KehadiranResource::collection($data));
+    }
+
     public function index(Request $request)
     {
         Gate::authorize('viewAny', Kehadiran::class);

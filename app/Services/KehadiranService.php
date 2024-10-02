@@ -29,23 +29,6 @@ class KehadiranService
         return $data;
     }
 
-    protected function checkStatusKehadiran($pegawai, $jamMasuk) 
-    {
-        $shiftKerja = $pegawai->shift_kerja()
-                                ->where('hari', DateHelper::formatDate('l', Carbon::now()))
-                                ->first();
-
-        if(!$shiftKerja) { 
-            throw new BadRequestHttpException('Shift kerja hari ini tidak ditemukan');
-        }
-
-        if($jamMasuk > $shiftKerja->jam_masuk) {
-            return 'Terlambat';
-        }
-
-        return 'Hadir';
-    }
-
     public function confirmAbsensi($request)
     {
         $token = $request->token;
@@ -66,6 +49,12 @@ class KehadiranService
             'jam_masuk'         => $jamMasuk,
         ]);
 
+        return $data;
+    }
+
+    public function getUserKehadiran() {
+        $pegawai = Auth::user()->pegawai;
+        $data = Kehadiran::where('id_pegawai', $pegawai->id_pegawai)->get();
         return $data;
     }
 
@@ -108,5 +97,22 @@ class KehadiranService
         $kehadiran = $this->getKehadiranById($id);
         $kehadiran->delete();
         return $kehadiran;
+    }
+
+    protected function checkStatusKehadiran($pegawai, $jamMasuk) 
+    {
+        $shiftKerja = $pegawai->shift_kerja()
+                                ->where('hari', DateHelper::formatDate('l', Carbon::now()))
+                                ->first();
+
+        if(!$shiftKerja) { 
+            throw new BadRequestHttpException('Shift kerja hari ini tidak ditemukan');
+        }
+
+        if($jamMasuk > $shiftKerja->jam_masuk) {
+            return 'Terlambat';
+        }
+
+        return 'Hadir';
     }
 }
