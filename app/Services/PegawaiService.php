@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Pegawai;
 use App\Models\User;
+use ErrorException;
+use Exception;
 
 class PegawaiService 
 {
@@ -30,8 +32,9 @@ class PegawaiService
             'email'         => $data['email'],
             'password'      => bcrypt('absensi_key_temp'),
         ]);
-        $data['id_user'] = $user->id_user;
-        $pegawai = Pegawai::create($data)->get()->load('user');
+        
+        $data['id_user']    = $user->id_user;
+        $pegawai            = Pegawai::create($data)->load('user');
 
         $this->emailService->sendResetLink($data['email']);
 

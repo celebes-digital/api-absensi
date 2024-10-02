@@ -15,22 +15,22 @@ use Illuminate\Support\Facades\DB;
 
 class EmailService
 {
-    public function sendResetLink($request)
+    public function sendResetLink($email, $url = null)
     {
-        $user = $this->findUserByEmail($request['email']);
+        $user = $this->findUserByEmail($email);
         if (!$user) {
             throw new BadRequestHttpException('Email belum terdaftar');
         }
 
-        $token = $this->getOrCreateToken($request['email']);
+        $token = $this->getOrCreateToken($email);
         $data = [
-            'email' => $request['email'],
-            'url'   => $request['url'],
+            'email' => $email,
+            'url'   => $url ?? request()->server('HTTP_REFERER'),
             'token' => $token
         ];
         
         try {
-            $this->sendResetEmail($request['email'], $data);
+            $this->sendResetEmail($email, $data);
 
             return true;
         } catch (Exception $e) {

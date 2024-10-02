@@ -22,10 +22,10 @@ class EmailController extends Controller
     {    
         $data = $request->validate([
             'email'     => 'required|email',
-            'url'       => 'required|url',
+            'url'       => 'sometimes|url',
         ]);
 
-        $this->emailService->sendResetLink($data);
+        $this->emailService->sendResetLink($data['email'], $data['url'] ?? null);
         return $this->success('Email verifikasi terkirim');
     }
 }
