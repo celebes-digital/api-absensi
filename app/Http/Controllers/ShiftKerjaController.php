@@ -20,6 +20,14 @@ class ShiftKerjaController extends Controller
     public function __construct(ShiftKerjaService $shiftKerjaService) {
         $this->shiftKerjaService = $shiftKerjaService;
     }
+
+    public function getShiftKerja() 
+    {
+        $data = $this->shiftKerjaService->getShiftKerjaByUser();
+        return $this->success('Berhasil mengambil semua data shift kerja', ShiftKerjaResource::collection($data));
+    }
+
+
     public function index(Request $request)
     {
         $data = $this->shiftKerjaService->getAllShiftKerja($request);

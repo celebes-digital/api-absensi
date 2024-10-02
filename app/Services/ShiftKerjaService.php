@@ -2,13 +2,24 @@
 
 namespace App\Services;
 
+use App\Models\Pegawai;
 use App\Models\ShiftKerja;
+use App\Models\User;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ShiftKerjaService
 {
     use ApiResponse;
+
+    public function getShiftKerjaByUser() 
+    {
+        $pegawai = Pegawai::where('id_user', Auth::user()->id_user)->get();
+        $shiftKerja = ShiftKerja::whereIn('id_pegawai', $pegawai->pluck('id_pegawai'))->get();
+        return $shiftKerja;
+
+    }
 
     public function getAllShiftKerja($request) 
     {
