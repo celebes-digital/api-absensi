@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Payroll;
 use App\Models\Pegawai;
+use Illuminate\Support\Facades\Auth;
 
 class PayrollService
 {
@@ -12,6 +13,15 @@ class PayrollService
     public function __construct(PegawaiService $pegawaiService)
     {
         $this->pegawaiService = $pegawaiService;
+    }
+
+    public function getPayrollByUser() 
+    {
+        $pegawai = Pegawai::where('id_user', Auth::id())->firstOrFail();
+        $payroll = Payroll::where('id_pegawai', $pegawai->id_pegawai)->get();
+        $payroll->load('pegawai');
+
+        return $payroll;
     }
 
     public function getAllPayroll()
