@@ -18,20 +18,18 @@ class ShiftKerjaService
         $pegawai = Pegawai::where('id_user', Auth::user()->id_user)->get();
         $shiftKerja = ShiftKerja::whereIn('id_pegawai', $pegawai->pluck('id_pegawai'))->get();
         return $shiftKerja;
-
     }
 
     public function getAllShiftKerja($request) 
     {
-        $query = ShiftKerja::query();
-        $query->join('pegawai', 'pegawai.id_pegawai', '=', 'shift_kerja.id_pegawai');
+        $query = ShiftKerja::join('pegawai', 'pegawai.id_pegawai', '=', 'shift_kerja.id_pegawai');
 
-        if($request->has('search')) {
-            $query->whereRaw('LOWER(pegawai.nama_lengkap) LIKE ?', ['%' . strtolower($request->search) . '%']);
+        if ($search = strtolower($request->get('search', ''))) {
+            $query->whereRaw('LOWER(pegawai.nama_lengkap) LIKE ?', ["%$search%"]);
         }
 
-        if($request->has('hari')) {
-            $query->where('shift_kerja.hari', $request->hari);
+        if ($hari = $request->get('hari')) {
+            $query->where('shift_kerja.hari', $hari);
         }
 
         $query->orderByRaw("
@@ -49,7 +47,8 @@ class ShiftKerjaService
         return $query->get();
     }
 
-    protected function checkTimeInputIsValid($jamMasuk, $jamKeluar): void {
+    protected function checkTimeInputIsValid($jamMasuk, $jamKeluar): void 
+    {
         if($jamMasuk > $jamKeluar) {
             throw new BadRequestHttpException('Jam keluar harus lebih besar dari jam masuk');
         }
@@ -77,7 +76,8 @@ class ShiftKerjaService
         return $shiftKerja->load('pegawai');
     }
 
-    public function deleteShiftKerja($id) {
+    public function deleteShiftKerja($id) 
+    {
         $this->getShiftKerjaById($id);
         return ShiftKerja::destroy($id);
     }
