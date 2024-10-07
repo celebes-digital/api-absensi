@@ -9,6 +9,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\ShiftKerjaController;
 
 Route::post('login',            [AuthController::class, 'login']);
@@ -30,6 +31,6 @@ Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
         Route::apiResource('pegawai',       PegawaiController::class);
         Route::apiResource('payroll',       PayrollController::class);
         Route::apiResource('kehadiran',     KehadiranController::class);
-        Route::apiResource('shift',         ShiftKerjaController::class);
+        Route::apiResource('shift',         ShiftController::class);
     });
 });

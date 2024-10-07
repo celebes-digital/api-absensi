@@ -9,9 +9,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'hari'          => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_masuk'     => 'required|date_format:H:i:s',
-            'jam_keluar'    => 'required|date_format:H:i:s',
+            'nama_shift'                => 'sometimes|max:50',
+            'jam_masuk'                 => 'sometimes|date_format:H:i:s',
+            'jam_keluar'                => 'sometimes|date_format:H:i:s',
+            'jam_istirahat_mulai'       => 'sometimes|date_format:H:i:s',
+            'jam_istirahat_selesai'     => 'sometimes|date_format:H:i:s',
+            'toleransi_keterlambatan'   => 'sometimes|numeric',
+            'status'                    => 'sometimes|in:Aktif,Arsip',
+            'warna'                     => 'sometimes|size:7'
         ];
     }
 }
