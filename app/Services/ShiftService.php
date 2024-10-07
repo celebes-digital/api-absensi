@@ -11,7 +11,25 @@ class ShiftService
 
     public function getAllShift($request) 
     {
-        $shift = Shift::all()->where('status', 'Aktif');
+        $shift = Shift::all();
+
+        if($filter = $request->filter) {
+            switch ($filter) {
+            case 'arsip':
+                $shift = $shift->where('status', 'Arsip');
+                break;
+            case 'all':
+                $shift = $shift;
+                break;
+            default:
+                $shift = $shift->where('status', 'Aktif');
+                break;
+            }
+            
+            return $shift;
+        }
+
+        $shift = $shift->where('status', 'Aktif');
         return $shift;
     }
 
