@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shift_kerja', function (Blueprint $table) {
-            $table->id('id_shift_kerja');
+        Schema::create('shift', function (Blueprint $table) {
+            $table->id('id_shift');
             $table->string('nama_shift', 50);
-            $table->string('hari', 10);
             $table->time('jam_masuk');
             $table->time('jam_keluar');
+            $table->time('jam_istirahat_mulai');
+            $table->time('jam_istirahat_selesai');
+            $table->unsignedSmallInteger('toleransi_keterlambatan', false);
+            $table->enum('status', ['Aktif', 'Arsip'])->default('Aktif');
+            $table->string('warna', 7)->default('#07134f');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shift_kerja');
+        Schema::dropIfExists('shift');
     }
 };

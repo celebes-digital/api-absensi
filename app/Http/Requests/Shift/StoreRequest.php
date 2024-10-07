@@ -9,10 +9,13 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_pegawai'    => 'required|exists:pegawai,id_pegawai',
-            'hari'          => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_masuk'     => 'required|date_format:H:i:s',
-            'jam_keluar'    => 'required|date_format:H:i:s',
+            'nama_shift'                => 'required|max:50',
+            'jam_masuk'                 => 'required|date_format:H:i:s',
+            'jam_keluar'                => 'required|date_format:H:i:s',
+            'jam_istirahat_mulai'       => 'required|date_format:H:i:s',
+            'jam_istirahat_selesai'     => 'required|date_format:H:i:s',
+            'toleransi_keterlambatan'   => 'required|numeric',
+            'warna'                     => 'sometimes|size:7'
         ];
     }
 }
