@@ -7,6 +7,7 @@ use App\Http\Controllers\GajiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\JadwalPegawaiController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\KehadiranController;
@@ -27,6 +28,8 @@ Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::post('kehadiran/confirm',        [KehadiranController::class,    'confirmAbsensi']);
         Route::post('email/send-verification',  [EmailController::class,        'sendEmailVerification']);
+        Route::put('jadwal/pegawai',            [JadwalPegawaiController::class,'updateJadwalPegawai']);
+        Route::get('jadwal/pegawai',            [JadwalPegawaiController::class,'getJadwalPegawai']);
         
         Route::apiResource('gaji',          GajiController::class);
         Route::apiResource('pegawai',       PegawaiController::class);
