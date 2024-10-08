@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\KehadiranController;
@@ -32,5 +33,6 @@ Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
         Route::apiResource('payroll',       PayrollController::class);
         Route::apiResource('kehadiran',     KehadiranController::class);
         Route::apiResource('shift',         ShiftController::class);
+        Route::apiResource('jadwal',        JadwalController::class);
     });
 });
