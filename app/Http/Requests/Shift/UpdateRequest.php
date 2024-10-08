@@ -10,10 +10,10 @@ class UpdateRequest extends FormRequest
     {
         return [
             'nama_shift'                => 'sometimes|max:50',
-            'jam_masuk'                 => 'sometimes|date_format:H:i:s',
-            'jam_keluar'                => 'sometimes|date_format:H:i:s',
-            'jam_istirahat_mulai'       => 'sometimes|date_format:H:i:s',
-            'jam_istirahat_selesai'     => 'sometimes|date_format:H:i:s',
+            'jam_masuk'                 => 'sometimes|date_format:H:i',
+            'jam_keluar'                => 'sometimes|date_format:H:i',
+            'jam_istirahat_mulai'       => 'sometimes|date_format:H:i',
+            'jam_istirahat_selesai'     => 'sometimes|date_format:H:i',
             'toleransi_keterlambatan'   => 'sometimes|numeric',
             'status'                    => 'sometimes|in:Aktif,Arsip',
             'warna'                     => 'sometimes|size:7'
