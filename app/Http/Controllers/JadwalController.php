@@ -19,6 +19,7 @@ class JadwalController extends Controller
     {
         $this->jadwalService = $jadwalService;
     }
+    
     public function index()
     {
         $data = $this->jadwalService->getAllJadwal();
