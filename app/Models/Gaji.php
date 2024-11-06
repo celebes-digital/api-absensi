@@ -9,8 +9,8 @@ class Gaji extends Model
 {
     use HasFactory;
 
-    protected $table = 'gaji';
-    protected $primaryKey = 'id_gaji';
+    protected $table        = 'gaji';
+    protected $primaryKey   = 'id_gaji';
 
     protected $fillable = [
         'id_pegawai',
@@ -25,7 +25,8 @@ class Gaji extends Model
         return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
     }
 
-    public function payroll() {
+    public function payroll() 
+    {
         return $this->hasMany(Payroll::class, 'id_gaji', 'id_gaji');
     }
 }
