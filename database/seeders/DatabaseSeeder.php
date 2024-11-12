@@ -2,7 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Gaji;
+use App\Models\Jadwal;
+use App\Models\JadwalPegawai;
+use App\Models\JadwalShift;
+use App\Models\Kehadiran;
+use App\Models\Payroll;
 use App\Models\Pegawai;
+use App\Models\Shift;
+use App\Models\ShiftKerja;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -45,6 +53,14 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Factories
-        Pegawai::factory(15)->create();
+        // Pegawai::factory(15)->create();
+        Kehadiran::factory(5)->create();
+        ShiftKerja::factory(5)->create();
+        Gaji::factory(5)->create();
+        Payroll::factory(5)->create();
+        Shift::factory(5)->create();
+        Jadwal::factory(5)->create();
+        JadwalShift::factory(5)->create();
+        JadwalPegawai::factory(5)->create();
     }
 }
