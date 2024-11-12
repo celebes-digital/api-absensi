@@ -9,6 +9,7 @@ use App\Models\JadwalShift;
 use App\Models\Kehadiran;
 use App\Models\Payroll;
 use App\Models\Pegawai;
+use App\Models\ProfilePerusahaan;
 use App\Models\Shift;
 use App\Models\ShiftKerja;
 use App\Models\User;
@@ -52,15 +53,23 @@ class DatabaseSeeder extends Seeder
         //     'rekening'      => '08'
         // ]);
 
+        ProfilePerusahaan::create([
+            'nama'              => 'PT. ABC',
+            'logo'              => '/storage/images/logo.png',
+            'alamat'            => 'Makassar',
+            'no_telp'           => '085',
+            'email'             => 'admin@gmail.com',
+        ]);
+
         // Factories
         // Pegawai::factory(15)->create();
-        Kehadiran::factory(5)->create();
-        ShiftKerja::factory(5)->create();
-        Gaji::factory(5)->create();
-        Payroll::factory(5)->create();
-        Shift::factory(5)->create();
-        Jadwal::factory(5)->create();
-        JadwalShift::factory(5)->create();
-        JadwalPegawai::factory(5)->create();
+        // Kehadiran::factory(5)->create();
+        // ShiftKerja::factory(5)->create();
+        // Gaji::factory(5)->create();
+        // Payroll::factory(5)->create();
+        // Shift::factory(5)->create();
+        // Jadwal::factory(5)->create();
+        // JadwalShift::factory(5)->create();
+        // JadwalPegawai::factory(5)->create();
     }
 }
