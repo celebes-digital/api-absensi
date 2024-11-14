@@ -53,19 +53,19 @@ class DatabaseSeeder extends Seeder
         //     'rekening'      => '08'
         // ]);
 
-        ProfilePerusahaan::create([
-            'nama'              => 'PT. ABC',
-            'logo'              => '/storage/images/logo.png',
-            'alamat'            => 'Makassar',
-            'no_telp'           => '085',
-            'email'             => 'admin@gmail.com',
-        ]);
+        // ProfilePerusahaan::create([
+        //     'nama'              => 'PT. ABC',
+        //     'logo'              => '/storage/images/logo.png',
+        //     'alamat'            => 'Makassar',
+        //     'no_telp'           => '085',
+        //     'email'             => 'admin@gmail.com',
+        // ]);
 
         // Factories
         // Pegawai::factory(15)->create();
         // Kehadiran::factory(5)->create();
         // ShiftKerja::factory(5)->create();
-        // Gaji::factory(5)->create();
+        Gaji::factory(10)->create();
         // Payroll::factory(5)->create();
         // Shift::factory(5)->create();
         // Jadwal::factory(5)->create();
