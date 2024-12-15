@@ -27,7 +27,7 @@ class JadwalService
             ]);
         }
 
-        return $jadwal->load('jadwalshift')->load('shift');
+        return $jadwal->load('jadwalshift');
     }
 
     public function getJadwalById($id)
