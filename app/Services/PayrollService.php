@@ -57,7 +57,7 @@ class PayrollService
         $payroll = Payroll::create($data);
         $payroll->load('pegawai');
         
-        return $data;
+        return $payroll;
     }
 
     public function updatePayroll($id, $data)
