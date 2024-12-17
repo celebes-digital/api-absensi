@@ -11,6 +11,7 @@ class GajiResource extends JsonResource
     {
         return [
             'id_gaji'       => $this->id_gaji,
+            'pegawai'       => $this->pegawai,
             'nama_pegawai'  => $this->pegawai->nama_lengkap,
             'gaji_pokok'    => $this->gaji_pokok,
             'tunjangan'     => $this->tunjangan,
