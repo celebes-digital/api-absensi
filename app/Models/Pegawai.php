@@ -47,4 +47,8 @@ class Pegawai extends Model
     public function payrol() {
         return $this->hasMany(Gaji::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function jadwalPegawai() {
+        return $this->hasOne(JadwalPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
 }

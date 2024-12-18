@@ -20,7 +20,7 @@ class KehadiranService
         $user   = User::with('pegawai')->findOrFail(Auth::id());
         $token  = Str::random(10);
 
-        Cache::put($token, $user->pegawai->id_pegawai, $seconds = 30);
+        Cache::put($token, $user->pegawai->id_pegawai, $seconds = 200);
 
         $data = [
             'token'     => $token,
@@ -101,7 +101,7 @@ class KehadiranService
 
     protected function checkStatusKehadiran($pegawai, $jamMasuk) 
     {
-        $shiftKerja = $pegawai->shift_kerja()
+        $shiftKerja = $pegawai->jadwalPegawai->jadwal->jadwalShift
                                 ->where('hari', DateHelper::formatDate('l', Carbon::now()))
                                 ->first();
 
