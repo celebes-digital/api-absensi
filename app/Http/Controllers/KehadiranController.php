@@ -22,20 +22,36 @@ class KehadiranController extends Controller
         $this->kehadiranService = $kehadiranService;
     }
 
-    public function generateKeyAbsensi()
+    public function generateKeyAbsensiMasuk()
     {
-        $token = $this->kehadiranService->generateKeyAbsensi();
-        return $this->success('Berhasil membuat token absensi', $token);
+        $token = $this->kehadiranService->generateKeyAbsensiMasuk();
+        return $this->success('Berhasil membuat token absensi masuk', $token);
+    }
+
+    public function generateKeyAbsensiKeluar()
+    {
+        $token = $this->kehadiranService->generateKeyAbsensiKeluar();
+        return $this->success('Berhasil membuat token absensi keluar', $token);
     }
     
-    public function confirmAbsensi(Request $request) 
+    public function confirmAbsensiMasuk(Request $request) 
     {
         $request->validate([
             'token' => 'required'
         ]);
 
-        $data = $this->kehadiranService->confirmAbsensi($request);
-        return $this->success('Berhasil konfirmasi absensi', new KehadiranResource($data));
+        $data = $this->kehadiranService->confirmAbsensiMasuk($request);
+        return $this->success('Berhasil konfirmasi absensi masuk', new KehadiranResource($data));
+    }
+
+    public function confirmAbsensiKeluar(Request $request) 
+    {
+        $request->validate([
+            'token' => 'required'
+        ]);
+
+        $data = $this->kehadiranService->confirmAbsensiKeluar($request);
+        return $this->success('Berhasil konfirmasi absensi keluar', new KehadiranResource($data));
     }
 
     public function getKehadiran(Request $request)

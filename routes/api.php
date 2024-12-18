@@ -22,11 +22,15 @@ Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
     Route::get('user/payroll',          [PayrollController::class,      'getPayroll']);
     Route::get('user/shift',            [ShiftKerjaController::class,   'getShiftKerja']);
     Route::get('user/kehadiran',        [KehadiranController::class,    'getKehadiran']);
-    Route::get('kehadiran/get-kode',    [KehadiranController::class,    'generateKeyAbsensi']);
+
+    Route::get('kehadiran/masuk/get-kode',      [KehadiranController::class, 'generateKeyAbsensiMasuk']);
+    Route::get('kehadiran/keluar/get-kode',     [KehadiranController::class, 'generateKeyAbsensiKeluar']);
+
     Route::apiResource('user',          UserController::class);
 
     Route::middleware('admin')->group(function () {
-        Route::post('kehadiran/confirm',        [KehadiranController::class,    'confirmAbsensi']);
+        Route::post('kehadiran/masuk/confirm',  [KehadiranController::class,    'confirmAbsensiMasuk']);
+        Route::post('kehadiran/keluar/confirm', [KehadiranController::class,    'confirmAbsensiKeluar']);
         Route::post('email/send-verification',  [EmailController::class,        'sendEmailVerification']);
         Route::put('jadwal/pegawai',            [JadwalPegawaiController::class,'updateJadwalPegawai']);
         Route::get('jadwal/pegawai',            [JadwalPegawaiController::class,'getJadwalPegawai']);
