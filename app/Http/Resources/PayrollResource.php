@@ -11,9 +11,11 @@ class PayrollResource extends JsonResource
     {
         return [
             'id_payroll'    => $this->id_payroll,
+            'pegawai'       => $this->pegawai,
             'nama_pegawai'  => $this->pegawai->nama_lengkap,
             'periode'       => $this->periode,
             'total_gaji'    => $this->total_pembayaran,
+            'potongan'      => $this->potongan,
         ];
     }
 }

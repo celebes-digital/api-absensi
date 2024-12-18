@@ -21,7 +21,8 @@ class PayrollController extends Controller
         $this->payrollService = $payrollService;
     }
 
-    public function getPayroll() {
+    public function getPayroll()
+    {
         $data = $this->payrollService->getPayrollByUser();
         return $this->success('Berhasil mengambil semua data payroll', PayrollResource::collection($data));
     }
