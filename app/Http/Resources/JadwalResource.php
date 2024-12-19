@@ -15,7 +15,8 @@ class JadwalResource extends JsonResource
             'is_default'    => $this->is_jadwal_default,
             'jadwal'        => $this->jadwalshift->map(function ($jadwalshift) {
                 return [
-                    'nama_shift'     => $jadwalshift->shift->nama_shift,
+                    'id_shift'      => $jadwalshift->shift->id_shift,
+                    'nama_shift'    => $jadwalshift->shift->nama_shift,
                     'hari'          => $jadwalshift->hari,
                     'jam_masuk'     => $jadwalshift->shift->jam_masuk,
                     'jam_keluar'    => $jadwalshift->shift->jam_keluar,
