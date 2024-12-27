@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Jadwal\GetJadwalPegawaiRequest;
 use App\Http\Requests\Jadwal\UpdateJadwalPegawaiRequest;
 use App\Http\Resources\JadwalPegawaiResource;
-use App\Models\JadwalPegawai;
 use App\Services\JadwalPegawaiService;
 use App\Traits\ApiResponse;
 
@@ -26,9 +24,9 @@ class JadwalPegawaiController extends Controller
         return $this->success('Berhasil mengambil data jadwal pegawai', JadwalPegawaiResource::collection($data));
     }
 
-    public function getJadwalPegawaiById(GetJadwalPegawaiRequest $request)
+    public function getJadwalPegawaiById()
     {
-        $data = $this->jadwalPegawaiService->getJadwalPegawaiById($request->id_jadwal, $request->id_pegawai);
+        $data = $this->jadwalPegawaiService->getJadwalPegawaiById(request('id_jadwal'), request('id_pegawai'));
 
         return $this->success('Berhasil mengambil data jadwal pegawai', new JadwalPegawaiResource($data));
     }
