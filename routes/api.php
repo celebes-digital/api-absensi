@@ -32,9 +32,10 @@ Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
         Route::post('kehadiran/masuk/confirm',  [KehadiranController::class,    'confirmAbsensiMasuk']);
         Route::post('kehadiran/keluar/confirm', [KehadiranController::class,    'confirmAbsensiKeluar']);
         Route::post('email/send-verification',  [EmailController::class,        'sendEmailVerification']);
-        Route::put('jadwal/pegawai',            [JadwalPegawaiController::class,'updateJadwalPegawai']);
-        Route::get('jadwal/pegawai',            [JadwalPegawaiController::class,'getJadwalPegawai']);
-        
+        Route::get('jadwal/pegawai',            [JadwalPegawaiController::class, 'getJadwalPegawai']);
+        Route::get('jadwal/pegawai/detail',     [JadwalPegawaiController::class, 'getJadwalPegawaiById']);
+        Route::put('jadwal/pegawai',            [JadwalPegawaiController::class, 'updateJadwalPegawai']);
+
         Route::apiResource('gaji',          GajiController::class);
         Route::apiResource('pegawai',       PegawaiController::class);
         Route::apiResource('payroll',       PayrollController::class);
