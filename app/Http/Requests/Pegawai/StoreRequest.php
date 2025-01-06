@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
             'jk'             => 'required|in:l,p',
             'tgl_lahir'      => 'required',
             'tempat_lahir'   => 'required',
-            'agama'          => 'required|in:islam,katolik,hindu,buddha,konghucu',
+            'agama'          => 'required|in:islam,kristen,katolik,hindu,buddha,konghucu',
             'gol_darah'      => 'required|in:A,B,AB,O,A+,B+,AB+,O+,A-,B-,AB-,O-',
             'pendidikan'     => 'required',
             'kontak_darurat' => 'required',
