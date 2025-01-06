@@ -69,7 +69,7 @@
             Jika tombol di atas tidak berfungsi, Anda dapat menyalin dan
             menempelkan URL berikut ke browser Anda:
         </p>
-        <p>{{ $url . '/reset-password?token=' . $token . '&email=' . $email }}</p>
+        <p>{{ $url . 'reset-password?token=' . $token . '&email=' . $email }}</p>
 
         <p>Harap diperhatikan:</p>
         <ul>
