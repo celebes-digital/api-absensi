@@ -59,7 +59,7 @@
 
         <div style="text-align: center">
             <a
-                href="{{ $url . '/reset-password?token=' . $token . '&email=' . $email }}"
+                href="{{ $url . 'reset-password?token=' . $token . '&email=' . $email }}"
                 class="button">
                 Reset Password
             </a>
