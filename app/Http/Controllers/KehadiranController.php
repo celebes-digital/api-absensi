@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Kehadiran\StoreRequest;
 use App\Http\Requests\Kehadiran\UpdateRequest;
+use App\Http\Resources\KehadiranPegawaiResource;
 use App\Http\Resources\KehadiranResource;
 use App\Models\Kehadiran;
 use App\Services\KehadiranService;
@@ -33,8 +34,8 @@ class KehadiranController extends Controller
         $token = $this->kehadiranService->generateKeyAbsensiKeluar();
         return $this->success('Berhasil membuat token absensi keluar', $token);
     }
-    
-    public function confirmAbsensiMasuk(Request $request) 
+
+    public function confirmAbsensiMasuk(Request $request)
     {
         $request->validate([
             'token' => 'required'
@@ -44,7 +45,7 @@ class KehadiranController extends Controller
         return $this->success('Berhasil konfirmasi absensi masuk', new KehadiranResource($data));
     }
 
-    public function confirmAbsensiKeluar(Request $request) 
+    public function confirmAbsensiKeluar(Request $request)
     {
         $request->validate([
             'token' => 'required'
@@ -65,7 +66,7 @@ class KehadiranController extends Controller
         Gate::authorize('viewAny', Kehadiran::class);
 
         $data = $this->kehadiranService->getAllKehadiran($request);
-        return $this->success('Berhasil mengambil semua data kehadiran', KehadiranResource::collection($data));
+        return $this->success('Berhasil mengambil semua data kehadiran', KehadiranPegawaiResource::collection($data));
     }
 
     public function show($id)

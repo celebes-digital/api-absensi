@@ -12,6 +12,7 @@ class KehadiranResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id_pegawai'     => $this->id_pegawai,
             'id_kehadiran'   => $this->id_kehadiran,
             'status'         => $this->status,
             'nama_pegawai'   => $this->pegawai->nama_lengkap,

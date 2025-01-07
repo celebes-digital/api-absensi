@@ -24,10 +24,16 @@ class JadwalPegawaiController extends Controller
         return $this->success('Berhasil mengambil data jadwal pegawai', JadwalPegawaiResource::collection($data));
     }
 
+    public function getJadwalPegawaiById()
+    {
+        $data = $this->jadwalPegawaiService->getJadwalPegawaiById(request('id_jadwal'), request('id_pegawai'));
+
+        return $this->success('Berhasil mengambil data jadwal pegawai', new JadwalPegawaiResource($data));
+    }
+
     public function updateJadwalPegawai(UpdateJadwalPegawaiRequest $request)
     {
         $data = $this->jadwalPegawaiService->updateJadwalPegawai($request->id_pegawai, $request->id_jadwal);
         return $this->success('Berhasil mengubah data jadwal pegawai', new JadwalPegawaiResource($data));
     }
-
 }
