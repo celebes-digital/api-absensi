@@ -174,10 +174,14 @@ class KehadiranService
             throw new BadRequestHttpException('Shift kerja hari ini tidak ditemukan');
         }
 
-        if ($jamMasuk > $shiftKerja->shift->jam_masuk) {
-            throw new BadRequestHttpException('Jam masuk seharusnya: ' . $shiftKerja->shift->jam_masuk);
+        if (
+            $jamMasuk > Carbon::createFromFormat('H:i:s', $shiftKerja->shift->jam_masuk)
+            ->addMinutes($shiftKerja->shift->toleransi_keterlambatan)
+            ->format('H:i:s')
+        ) {
+            // throw new BadRequestHttpException('Jam masuk seharusnya: ' . $shiftKerja->shift->jam_masuk);
             $keterlambatan = Carbon::createFromFormat('H:i:s', $jamMasuk)
-                ->diffInMinutes(Carbon::createFromFormat('H:i:s', $shiftKerja->jam_masuk));
+                ->diffInMinutes(Carbon::createFromFormat('H:i:s', $shiftKerja->shift->jam_masuk));
             return 'Terlambat ' . $keterlambatan . ' menit';
         }
 
