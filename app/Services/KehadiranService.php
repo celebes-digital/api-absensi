@@ -63,11 +63,20 @@ class KehadiranService
         return $data;
     }
 
-    public function getUserKehadiran()
+    public function getUserKehadiran($request)
     {
         $pegawai    = Auth::user()->pegawai;
-        $data       = Kehadiran::where('id_pegawai', $pegawai->id_pegawai)->get();
-        return $data;
+        $query      = Kehadiran::where('id_pegawai', $pegawai->id_pegawai);
+
+        if ($request->has('tgl_kehadiran')) {
+            $query->where('tgl_kehadiran', $request->tgl_kehadiran);
+        }
+
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        return $query->get();
     }
 
     public function getAllKehadiran(Request $request)
