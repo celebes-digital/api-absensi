@@ -189,9 +189,9 @@ class KehadiranService
             ->format('H:i:s')
         ) {
             // throw new BadRequestHttpException('Jam masuk seharusnya: ' . $shiftKerja->shift->jam_masuk);
-            $keterlambatan = Carbon::createFromFormat('H:i:s', $jamMasuk)
-                ->diffInMinutes(Carbon::createFromFormat('H:i:s', $shiftKerja->shift->jam_masuk));
-            return 'Terlambat ' . $keterlambatan . ' menit';
+            // $keterlambatan = Carbon::createFromFormat('H:i:s', $jamMasuk)
+            //     ->diffInMinutes(Carbon::createFromFormat('H:i:s', $shiftKerja->shift->jam_masuk));
+            return 'Terlambat';
         }
 
         return 'Hadir';
