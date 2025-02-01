@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
@@ -20,45 +21,52 @@ class KehadiranExport implements FromCollection, WithHeadings, WithStyles, Shoul
                 'tgl_kehadiran',
                 'jam_masuk',
                 'jam_keluar',
-                DB::raw("IF(TIMESTAMPDIFF(MINUTE, '08:30:00', jam_masuk) > 0, TIMESTAMPDIFF(MINUTE, '08:30:00', jam_masuk), '-') AS menit_keterlambatan")
+                DB::raw("TIME_TO_SEC(TIMEDIFF(jam_masuk, '08:30:00'))/60 AS menit_keterlambatan")
             )
             ->get()
             ->map(function ($item) {
+                // Debug log
+                Log::info('Data item:', [
+                    'jam_masuk' => $item->jam_masuk,
+                    'keterlambatan' => $item->menit_keterlambatan
+                ]);
+
                 return [
                     'nama_lengkap' => $item->pegawai->nama_lengkap,
                     'tgl_kehadiran' => $item->tgl_kehadiran,
                     'jam_masuk' => $item->jam_masuk,
                     'jam_keluar' => $item->jam_keluar,
-                    'menit_keterlambatan' => $item->menit_keterlambatan,
+                    'menit_keterlambatan' => $item->menit_keterlambatan > 0 ?
+                        round($item->menit_keterlambatan) : '-'
                 ];
             });
 
         return $data;
     }
 
-	public function headings(): array
-	{
-		// TODO: Implement headings() method.
-		return [
-			'Nama Lengkap',
-			'Tanggal Kehadiran',
-			'Jam Masuk',
-			'Jam Keluar',
-			'Menit Keterlambatan',
-		];
-	}
+    public function headings(): array
+    {
+        // TODO: Implement headings() method.
+        return [
+            'Nama Lengkap',
+            'Tanggal Kehadiran',
+            'Jam Masuk',
+            'Jam Keluar',
+            'Menit Keterlambatan',
+        ];
+    }
 
-	public function styles(Worksheet $sheet)
-	{
-		// TODO: Implement styles() method.
-		return [
-			2 => ['font' => ['bold' => true, 'size' => 14]],
-		];
-	}
+    public function styles(Worksheet $sheet)
+    {
+        // TODO: Implement styles() method.
+        return [
+            2 => ['font' => ['bold' => true, 'size' => 14]],
+        ];
+    }
 
-	public function startCell(): string
-	{
-		// TODO: Implement startCell() method.
-		return 'B2';
-	}
+    public function startCell(): string
+    {
+        // TODO: Implement startCell() method.
+        return 'B2';
+    }
 }
