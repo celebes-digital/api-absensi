@@ -11,6 +11,7 @@ use App\Services\KehadiranService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KehadiranController extends Controller
 {
@@ -53,6 +54,12 @@ class KehadiranController extends Controller
 
         $data = $this->kehadiranService->confirmAbsensiKeluar($request);
         return $this->success('Berhasil konfirmasi absensi keluar', new KehadiranResource($data));
+    }
+
+    public  function  export()
+    {
+        $month = date('F');
+        return Excel::download(new \App\Exports\KehadiranExport, "Celebes-$month.xlsx");
     }
 
     public function getKehadiran(Request $request)
