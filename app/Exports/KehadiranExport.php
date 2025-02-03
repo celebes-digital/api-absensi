@@ -13,6 +13,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class KehadiranExport implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithCustomStartCell
 {
+	public  function __construct(public $tahun, public $bulan)
+	{
+	}
+
     public function collection()
     {
         $data = \App\Models\Kehadiran::with('pegawai:id_pegawai,nama_lengkap')
@@ -23,14 +27,10 @@ class KehadiranExport implements FromCollection, WithHeadings, WithStyles, Shoul
                 'jam_keluar',
                 DB::raw("TIME_TO_SEC(TIMEDIFF(jam_masuk, '08:30:00'))/60 AS menit_keterlambatan")
             )
+			->whereYear('tgl_kehadiran', $this->tahun)
+			->whereMonth('tgl_kehadiran', $this->bulan)
             ->get()
             ->map(function ($item) {
-                // Debug log
-                Log::info('Data item:', [
-                    'jam_masuk' => $item->jam_masuk,
-                    'keterlambatan' => $item->menit_keterlambatan
-                ]);
-
                 return [
                     'nama_lengkap' => $item->pegawai->nama_lengkap,
                     'tgl_kehadiran' => $item->tgl_kehadiran,

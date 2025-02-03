@@ -56,10 +56,9 @@ class KehadiranController extends Controller
         return $this->success('Berhasil konfirmasi absensi keluar', new KehadiranResource($data));
     }
 
-    public  function  export()
+    public  function  export($tahun, $bulan)
     {
-        $month = date('F');
-        return Excel::download(new \App\Exports\KehadiranExport, "Celebes-$month.xlsx");
+        return Excel::download(new \App\Exports\KehadiranExport($tahun, $bulan), "Celebes-$tahun-$bulan.xlsx");
     }
 
     public function getKehadiran(Request $request)

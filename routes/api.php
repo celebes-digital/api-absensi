@@ -17,6 +17,8 @@ use App\Http\Controllers\ShiftKerjaController;
 Route::post('login',            [AuthController::class, 'login']);
 Route::post('password-reset',   [AuthController::class, 'resetPassword']);
 
+Route::get('/kehadiran/export/{tahun}/{bulan}', [\App\Http\Controllers\KehadiranController::class, 'export']);
+
 Route::middleware('auth:sanctum', 'isEmailVerify')->group(function () {
     Route::post('logout',               [AuthController::class,         'logout']);
     Route::get('user/payroll',          [PayrollController::class,      'getPayroll']);
